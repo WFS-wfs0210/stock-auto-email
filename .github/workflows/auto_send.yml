@@ -1,0 +1,37 @@
+name: 每日股票分析自动推送到163邮箱
+
+# 触发规则：周一到周五 北京时间早上8:30（A股开盘前）自动运行
+on:
+  schedule:
+    - cron: '30 0 * * 1-5'  # 固定写法，对应北京时间8:30，周一到周五
+  # 支持手动点击运行，方便测试
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # 用GitHub的免费云端服务器运行
+    steps:
+    # 第一步：拉取你上传的代码
+    - uses: actions/checkout@v4
+    
+    # 第二步：安装Python环境
+    - name: 安装Python环境
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'  # 和你本地装的版本一致，稳定不报错
+    
+    # 第三步：安装必备的工具库
+    - name: 安装依赖工具
+      run: |
+        python -m pip install --upgrade pip
+        pip install akshare pandas numpy requests
+    
+    # 第四步：运行代码，发邮件
+    - name: 执行股票分析并发送邮件
+      env:
+        # 这里的名字必须和GitHub Secrets里的名字完全一致，大小写不能错
+        EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
+        EMAIL_AUTH_CODE: ${{ secrets.EMAIL_AUTH_CODE }}
+        EMAIL_RECEIVER: ${{ secrets.EMAIL_RECEIVER }}
+      run: |
+        python stock_analysis.py
