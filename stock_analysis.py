@@ -9,7 +9,7 @@ STOCK_LIST = ["000719", "600361", "002759"]
 # 邮箱配置
 SEND_EMAIL = "15133943269@163.com"
 # 注意：这里填163邮箱的SMTP授权码，不是你的邮箱登录密码
-EMAIL_AUTH_CODE = "RXupLDQuxytSjYFb"
+EMAIL_AUTH_CODE = "XT3ZiXALfAJAzARW"
 RECEIVE_EMAIL = "15133943269@163.com"
 # -------------------------------------------------------------
 
@@ -126,4 +126,5 @@ if __name__ == "__main__":
     print(report)
     # 确认无误后，取消下面这行的注释，即可发送邮件
     # send_report_email(report, send_date)
+
 
