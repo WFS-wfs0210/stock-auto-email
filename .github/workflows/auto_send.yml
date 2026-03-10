@@ -10,21 +10,20 @@ jobs:
   stock-analysis:
     runs-on: ubuntu-latest
     steps:
-      # 1. 拉取仓库代码
+      # 1. 拉取仓库代码（最基础的配置，不会出错）
       - name: 检出仓库代码
         uses: actions/checkout@v4
 
-      # 2. 设置北京时间时区（彻底解决8小时时差问题）
+      # 2. 设置北京时间时区
       - name: 设置北京时间时区
         run: |
           sudo timedatectl set-timezone Asia/Shanghai
 
-      # 3. 安装Python环境
+      # 3. 安装Python环境（去掉了会报错的cache配置，极简无坑）
       - name: 安装Python环境
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-          cache: 'pip'
 
       # 4. 安装所有依赖工具
       - name: 安装依赖工具
